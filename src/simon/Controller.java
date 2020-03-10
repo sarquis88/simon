@@ -1,10 +1,5 @@
 package simon;
 
-import javafx.application.Platform;
-
-import java.util.Timer;
-import java.util.TimerTask;
-
 public class Controller {
 
     private static Controller thisController;
@@ -28,35 +23,26 @@ public class Controller {
     }
 
     public void jugar() {
-        GamePane.getInstance().disableButton("red", false);
 
-        String[] secuencia = {"red", "green", "yellow", "blue"};
-
-        Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-            int index = 0;
-            @Override
-            public void run() {
-                next(secuencia, index);
-                index++;
-
-                if(index == secuencia.length + 1)
-                    timer.cancel();
-            }
-        }, 0, 1000);
+        GamePane.getInstance().quitarAccion();
+        mostrar();
     }
 
-    private void terminar() {
+    public void mostrar() {
+        SecuenciasManager.getInstance().showSecuenciaRandom(3);
+    }
+
+    public void finShow() {
+        GamePane.getInstance().disableButtons(false);
+        GamePane.getInstance().agregarAccion();
+    }
+
+    public void finRonda() {
         GamePane.getInstance().disableButtons(true);
-        GameGrid.getInstance().terminarReaccion();
+        GameGrid.getInstance().finRonda();
     }
 
-    private void next(String[] secuencia, int index) {
-        if(index > 0)
-            GamePane.getInstance().disableButton(secuencia[index - 1], true);
-        if(index < secuencia.length)
-            GamePane.getInstance().disableButton(secuencia[index], false);
-        else
-            terminar();
+    public void colorButtonReaccion(String colors) {
+        SecuenciasManager.getInstance().getRespuesta(colors);
     }
 }

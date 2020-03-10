@@ -75,16 +75,16 @@ public class GamePane implements SimonParameters {
     public void disableButton(String target, boolean disable) {
         Button button = null;
         switch (target) {
-            case "red":
+            case "r":
                 button = this.upRed;
                 break;
-            case "green":
+            case "g":
                 button = this.rightGreen;
                 break;
-            case "yellow":
+            case "y":
                 button = this.downYellow;
                 break;
-            case "blue":
+            case "b":
                 button = this.leftBlue;
                 break;
             default:
@@ -92,5 +92,19 @@ public class GamePane implements SimonParameters {
         }
         if(button != null)
             button.setDisable(disable);
+    }
+
+    public void quitarAccion() {
+        this.upRed.setOnAction(null);
+        this.rightGreen.setOnAction(null);
+        this.downYellow.setOnAction(null);
+        this.leftBlue.setOnAction(null);
+    }
+
+    public void agregarAccion() {
+        this.upRed.setOnAction(e -> Controller.getInstance().colorButtonReaccion("r"));
+        this.rightGreen.setOnAction(e -> Controller.getInstance().colorButtonReaccion("g"));
+        this.downYellow.setOnAction(e -> Controller.getInstance().colorButtonReaccion("y"));
+        this.leftBlue.setOnAction(e -> Controller.getInstance().colorButtonReaccion("b"));
     }
 }

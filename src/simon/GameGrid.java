@@ -10,7 +10,6 @@ public class GameGrid implements SimonParameters {
 
     private GridPane thisGrid;
     private Button jugar;
-    private Button terminar;
 
     /**
      * Patron singleton
@@ -34,20 +33,13 @@ public class GameGrid implements SimonParameters {
         jugar.setStyle(buttonsStyle);
         jugar.setOnAction(e -> jugarReaccion());
 
-        terminar = new Button("Terminar");
-        terminar.setPrefSize(buttonsWidth, buttonsHeight);
-        terminar.setStyle(buttonsStyle);
-        terminar.setDisable(true);
-        terminar.setOnAction(e -> terminarReaccion());
-
         Button salir = new Button("Salir");
         salir.setPrefSize(buttonsWidth, buttonsHeight);
         salir.setStyle(buttonsStyle);
         salir.setOnAction(e -> Controller.getInstance().exit(0));
 
         thisGrid.add(jugar, 0, 0);
-        thisGrid.add(terminar, 1, 0);
-        thisGrid.add(salir, 10, 0);
+        thisGrid.add(salir, 12, 0);
 
     }
 
@@ -71,13 +63,10 @@ public class GameGrid implements SimonParameters {
 
     private void jugarReaccion() {
         jugar.setDisable(true);
-        terminar.setDisable(false);
-
         Controller.getInstance().jugar();
     }
 
-    public void terminarReaccion() {
-        terminar.setDisable(true);
+    public void finRonda() {
         jugar.setDisable(false);
     }
 }
