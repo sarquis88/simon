@@ -30,10 +30,9 @@ public class SecuenciasManager {
 
     /**
      * Muestra una secuencia de colores random
-     * @param size tamaño de secuencia
      */
-    public void showSecuenciaRandom(int size) {
-        this.secuenciaActual = getSecuenciaRandom(size);
+    public void showSecuenciaRandom() {
+        this.secuenciaActual.add(getColorRandom());
         Timer timer0;
 
         timer0 = new Timer();
@@ -64,19 +63,13 @@ public class SecuenciasManager {
     }
 
     /**
-     * Generacion de secuencia random
-     * @param size tamaño de secuencia
-     * @return lista de string con los colores
+     * Generacion de color random
+     * @return string con el color
      */
-    private LinkedList<String> getSecuenciaRandom(int size) {
+    private String getColorRandom() {
         String[] opciones = {"r", "g", "y", "b"};
-        LinkedList<String> secuencia = new LinkedList<>();
-
-        for(int i = 0; i < size; i++) {
-            Random random = new Random();
-            secuencia.add(i, opciones[random.nextInt(opciones.length)]);
-        }
-        return secuencia;
+        Random random = new Random();
+        return opciones[random.nextInt(opciones.length)];
     }
 
     /**
@@ -98,6 +91,7 @@ public class SecuenciasManager {
     public boolean setRespuesta(LinkedList<String> respuesta) {
         for(int i = 0; i < respuesta.size(); i++) {
             if(!respuesta.get(i).equalsIgnoreCase(secuenciaActual.get(i))) {
+                this.secuenciaActual.clear();
                 return false;
             }
         }

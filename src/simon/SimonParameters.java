@@ -4,7 +4,7 @@ import javafx.scene.paint.Color;
 
 public interface SimonParameters {
 
-    int sceneHeight = 350;
+    int sceneHeight = 380;
     int sceneWidth = 400;
     int paneHeight = 300;
     int paneWidth = 400;
@@ -25,4 +25,6 @@ public interface SimonParameters {
     String buttonsSimonStyle = "-fx-font-size: 15; ; -fx-border-color: black; -fx-border-radius: 5em; -fx-background-radius: 5em;";
     String statusStyle = "-fx-font-size: 15; -fx-text-fill: white";
     String layoutStyle = "-fx-background-color: dimgray";
+
+    String bddPath = "./src/simon/simon.db";
 }

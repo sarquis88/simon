@@ -1,5 +1,7 @@
 package simon;
 
+// TODO REESTABLECER BASE DE DATOS
+
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -19,6 +21,8 @@ public class Main extends Application {
         primaryStage.setResizable(false);
         primaryStage.setMaximized(false);
         primaryStage.setTitle("simon");
+
+        SimonBDD.getInstance();
 
         primaryStage.setScene(View.getInstance().getScene());
         primaryStage.show();

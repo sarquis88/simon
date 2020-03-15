@@ -6,11 +6,12 @@ public class Controller {
 
     private static Controller thisController;
 
+    private static LinkedList<String> puntajes = new LinkedList<>();
+
     private String status;
     private LinkedList<String> respuestaActual;
 
     private int ronda;
-
 
     /**
      * Patron singleton
@@ -52,7 +53,7 @@ public class Controller {
 
         this.status = "MUESTRA";
         GamePane.getInstance().quitarAccion();
-        SecuenciasManager.getInstance().showSecuenciaRandom(this.ronda);
+        SecuenciasManager.getInstance().showSecuenciaRandom();
     }
 
     /**
@@ -94,7 +95,17 @@ public class Controller {
             }
             else {
                 showMessage("SIMON");
-                MessagesManager.showInformationAlert("PERDISTE\nRONDA " + this.ronda);
+                if(MessagesManager.confirmation("PERDISTE\nRONDA "
+                        + this.ronda + "\n\nDesea guardar su puntaje?")) {
+                    InputSimpleDialog inputSimpleDialog = new InputSimpleDialog("Ingrese su nombre");
+                    inputSimpleDialog.show();
+                    String nombre = inputSimpleDialog.getResult();
+                    if(nombre != null) {
+                        SimonBDD.getInstance().insertarPuntaje(nombre, ronda);
+                        puntajes.clear();
+                        SimonBDD.getInstance().restorePuntajesFromBDD();
+                    }
+                }
                 finRonda();
             }
         }
@@ -106,5 +117,31 @@ public class Controller {
      */
     private void showMessage(String message) {
         GameGrid.getInstance().setStatus(message);
+    }
+
+    /**
+     * Agregado de nuevo puntaje
+     * @param puntaje puntaje a agregar
+     */
+    public static void addPuntaje(String puntaje) {
+        puntajes.add(puntaje);
+    }
+
+    /**
+     * Muestra de puntajes
+     */
+    public void verPuntajes() {
+        if(puntajes.isEmpty())
+            MessagesManager.showInformationAlert("No hay puntajes guardados", false);
+        else {
+            String puntajesParaMostrar = "JUGADOR --- RONDA";
+            for(String puntaje : puntajes) {
+                String jugador = puntaje.split("-")[0];
+                int ronda = Integer.decode(puntaje.split("-")[1]);
+
+                puntajesParaMostrar = puntajesParaMostrar.concat("\n" + jugador + " --- " + ronda);
+            }
+            MessagesManager.showInformationAlert(puntajesParaMostrar, true);
+        }
     }
 }

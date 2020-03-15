@@ -14,6 +14,7 @@ public class GameGrid implements SimonParameters {
     private GridPane thisGrid;
     private Pane statusPane;
     private Button jugar;
+    private Button verPuntajes;
     private Label status;
     private Rectangle rectangle;
 
@@ -58,13 +59,19 @@ public class GameGrid implements SimonParameters {
         rectangle.setArcWidth(arcWidth);
         rectangle.setFill(rectangleColor);
 
+        verPuntajes = new Button("Ver puntajes");
+        verPuntajes.setPrefSize(rectangle.getWidth(), buttonsHeight);
+        verPuntajes.setStyle(buttonsStyle);
+        verPuntajes.setOnAction(e -> Controller.getInstance().verPuntajes());
+
         statusPane.getChildren().add(rectangle);
 
         setStatus("SIMON");
 
         thisGrid.add(jugar, 0, 0);
         thisGrid.add(statusPane, 1, 0);
-        thisGrid.add(salir, 10, 0);
+        thisGrid.add(salir, 2, 0);
+        thisGrid.add(verPuntajes, 1, 1);
 
     }
 
@@ -92,6 +99,7 @@ public class GameGrid implements SimonParameters {
      */
     private void jugarReaccion() {
         jugar.setDisable(true);
+        verPuntajes.setDisable(true);
         Controller.getInstance().jugar();
     }
 
@@ -100,6 +108,7 @@ public class GameGrid implements SimonParameters {
      */
     public void finRonda() {
         jugar.setDisable(false);
+        verPuntajes.setDisable(false);
     }
 
     /**
