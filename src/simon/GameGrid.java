@@ -27,6 +27,9 @@ public class GameGrid implements SimonParameters {
         return thisGameGrid;
     }
 
+    /**
+     * Constructor de clase
+     */
     private GameGrid() {
 
         thisGrid = new GridPane();
@@ -55,11 +58,9 @@ public class GameGrid implements SimonParameters {
         rectangle.setArcWidth(arcWidth);
         rectangle.setFill(rectangleColor);
 
-        this.status = new Label("INICIO");
-        this.status.setStyle(statusStyle);
-        this.status.setLayoutX(rectangle.getWidth() * 0.36);
+        statusPane.getChildren().add(rectangle);
 
-        statusPane.getChildren().addAll(rectangle, this.status);
+        setStatus("SIMON");
 
         thisGrid.add(jugar, 0, 0);
         thisGrid.add(statusPane, 1, 0);
@@ -85,24 +86,34 @@ public class GameGrid implements SimonParameters {
         return this.thisGrid;
     }
 
+    /**
+     * Desactivacion del boton de jugar
+     * Comienzo de juego
+     */
     private void jugarReaccion() {
         jugar.setDisable(true);
         Controller.getInstance().jugar();
     }
 
+    /**
+     * Activacion del boton de jugar
+     */
     public void finRonda() {
         jugar.setDisable(false);
     }
 
+    /**
+     * Cambia el mensaje del margen superior
+     * @param status mensaje a mostrar
+     */
     public void setStatus(String status) {
-        this.statusPane.getChildren().remove(this.status);
+
+        if(this.status != null)
+            this.statusPane.getChildren().remove(this.status);
         this.status = new Label(status);
         this.status.setStyle(statusStyle);
-
-        if(status.equalsIgnoreCase("INICIO"))
-            this.status.setLayoutX(rectangle.getWidth() * 0.36);
-        else
-            this.status.setLayoutX(hPadding);
+        this.status.setLayoutX(rectangle.getWidth() * 0.33);
+        this.status.setLayoutY(vPadding / 2.00);
         this.statusPane.getChildren().add(this.status);
     }
 }

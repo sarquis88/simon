@@ -4,7 +4,6 @@ import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.*;
-import javafx.scene.shape.Rectangle;
 
 public class View implements SimonParameters {
 
@@ -37,12 +36,12 @@ public class View implements SimonParameters {
         Separator separator = new Separator();
         separator.setOrientation(Orientation.HORIZONTAL);
         separator.setLayoutX(0);
-        separator.setLayoutY(gamePane.getThisPane().getLayoutY() - vPadding);
+        separator.setLayoutY(gamePane.getThisPane().getLayoutY());
         separator.setPrefWidth(sceneWidth);
         separator.setPrefHeight(separatorHeight);
 
         layout.getChildren().addAll(gameGrid.getGridPane(), separator, gamePane.getThisPane());
-
+        layout.setStyle(layoutStyle);
         this.thisScene = new Scene(layout, sceneWidth, sceneHeight);
     }
 

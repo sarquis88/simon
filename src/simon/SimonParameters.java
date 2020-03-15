@@ -24,4 +24,5 @@ public interface SimonParameters {
     String buttonsStyle = "-fx-font-size: 12.5";
     String buttonsSimonStyle = "-fx-font-size: 15; ; -fx-border-color: black; -fx-border-radius: 5em; -fx-background-radius: 5em;";
     String statusStyle = "-fx-font-size: 15; -fx-text-fill: white";
+    String layoutStyle = "-fx-background-color: dimgray";
 }

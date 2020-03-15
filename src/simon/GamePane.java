@@ -23,6 +23,9 @@ public class GamePane implements SimonParameters {
         return thisGamePane;
     }
 
+    /**
+     * Constructor de clase
+     */
     private GamePane() {
         thisPane = new Pane();
         thisPane.setPrefSize(paneWidth, paneHeight);
@@ -56,15 +59,28 @@ public class GamePane implements SimonParameters {
         thisPane.getChildren().addAll(this.downYellow, this.leftBlue, this.upRed, this.rightGreen);
     }
 
+    /**
+     * Seteo de posicion del pane
+     * @param x layout x
+     * @param y layout y
+     */
     public void setLayout(double x, double y) {
         thisPane.setLayoutX(x);
         thisPane.setLayoutY(y);
     }
 
+    /**
+     * Getter del pane
+     * @return objeto Pane de la clase
+     */
     public Pane getThisPane() {
         return this.thisPane;
     }
 
+    /**
+     * Activa o desactiva todos los botones
+     * @param disable true para desactivar, false para activar
+     */
     public void disableButtons(boolean disable) {
         upRed.setDisable(disable);
         downYellow.setDisable(disable);
@@ -72,6 +88,11 @@ public class GamePane implements SimonParameters {
         leftBlue.setDisable(disable);
     }
 
+    /**
+     * Desactivar o activar un boton especifico
+     * @param target boton a desactivar
+     * @param disable true para desactivar, false para activar
+     */
     public void disableButton(String target, boolean disable) {
         Button button = null;
         switch (target) {
@@ -94,6 +115,9 @@ public class GamePane implements SimonParameters {
             button.setDisable(disable);
     }
 
+    /**
+     * Quitado de reaccion a botones
+     */
     public void quitarAccion() {
         this.upRed.setOnAction(null);
         this.rightGreen.setOnAction(null);
@@ -101,6 +125,9 @@ public class GamePane implements SimonParameters {
         this.leftBlue.setOnAction(null);
     }
 
+    /**
+     * Agregado de acciones a los botones
+     */
     public void agregarAccion() {
         this.upRed.setOnAction(e -> Controller.getInstance().colorButtonReaccion("r"));
         this.rightGreen.setOnAction(e -> Controller.getInstance().colorButtonReaccion("g"));

@@ -22,17 +22,29 @@ public class Controller {
         return thisController;
     }
 
+    /**
+     * Constructor de clase
+     */
     public Controller() {
         this.respuestaActual = new LinkedList<>();
         this.status = "INICIO";
     }
 
+    /**
+     * Salir del juego
+     * Cierre de ventana
+     * @param status estado de salida
+     */
     public void exit(int status) {
         System.exit(status);
     }
 
+    /**
+     * Comienzo de ronda
+     * Muestra de colores
+     * Respuesta de jugador
+     */
     public void jugar() {
-        // TODO ronda no avanza
         if(this.status.equalsIgnoreCase("INICIO"))
             this.ronda = 1;
         else if(this.status.equalsIgnoreCase("RESPUESTA"))
@@ -43,6 +55,9 @@ public class Controller {
         SecuenciasManager.getInstance().showSecuenciaRandom(this.ronda);
     }
 
+    /**
+     * Fin de muestra de colores de ronda
+     */
     public void finShow() {
         if(this.status.equalsIgnoreCase("MUESTRA")) {
             GamePane.getInstance().disableButtons(false);
@@ -51,6 +66,10 @@ public class Controller {
         }
     }
 
+    /**
+     * Fin de ronda
+     * Ejecutado luego de responder
+     */
     public void finRonda() {
         this.status = "INICIO";
         this.ronda = 0;
@@ -58,6 +77,10 @@ public class Controller {
         GameGrid.getInstance().finRonda();
     }
 
+    /**
+     * Reaccion a los botones de colores
+     * @param colors idenficador de color (ROJO = 'r')
+     */
     public void colorButtonReaccion(String colors) {
         this.respuestaActual.add(colors);
         if(this.respuestaActual.size() == this.ronda) {
@@ -66,16 +89,21 @@ public class Controller {
             this.respuestaActual.clear();
 
             if(ganado) {
-                showMessage("GANADA RONDA " + this.ronda);
+                showMessage("RONDA " + this.ronda);
                 jugar();
             }
             else {
-                showMessage("PERDIDA RONDA " + this.ronda);
+                showMessage("SIMON");
+                MessagesManager.showInformationAlert("PERDISTE\nRONDA " + this.ronda);
                 finRonda();
             }
         }
     }
 
+    /**
+     * Mostrar mensaje en el margen superior
+     * @param message mensaje propiamente dicho
+     */
     private void showMessage(String message) {
         GameGrid.getInstance().setStatus(message);
     }
