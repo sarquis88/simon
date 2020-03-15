@@ -2,14 +2,20 @@ package simon;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle;
 
 public class GameGrid implements SimonParameters {
 
     private static GameGrid thisGameGrid;
 
     private GridPane thisGrid;
+    private Pane statusPane;
     private Button jugar;
+    private Label status;
+    private Rectangle rectangle;
 
     /**
      * Patron singleton
@@ -38,8 +44,26 @@ public class GameGrid implements SimonParameters {
         salir.setStyle(buttonsStyle);
         salir.setOnAction(e -> Controller.getInstance().exit(0));
 
+        statusPane = new Pane();
+        statusPane.setPrefSize(buttonsWidth, buttonsHeight);
+
+        rectangle = new Rectangle(0,
+                0,
+                buttonsWidth * 2,
+                buttonsHeight * 1.5);
+        rectangle.setArcHeight(arcHeight);
+        rectangle.setArcWidth(arcWidth);
+        rectangle.setFill(rectangleColor);
+
+        this.status = new Label("INICIO");
+        this.status.setStyle(statusStyle);
+        this.status.setLayoutX(rectangle.getWidth() * 0.36);
+
+        statusPane.getChildren().addAll(rectangle, this.status);
+
         thisGrid.add(jugar, 0, 0);
-        thisGrid.add(salir, 12, 0);
+        thisGrid.add(statusPane, 1, 0);
+        thisGrid.add(salir, 10, 0);
 
     }
 
@@ -68,5 +92,17 @@ public class GameGrid implements SimonParameters {
 
     public void finRonda() {
         jugar.setDisable(false);
+    }
+
+    public void setStatus(String status) {
+        this.statusPane.getChildren().remove(this.status);
+        this.status = new Label(status);
+        this.status.setStyle(statusStyle);
+
+        if(status.equalsIgnoreCase("INICIO"))
+            this.status.setLayoutX(rectangle.getWidth() * 0.36);
+        else
+            this.status.setLayoutX(hPadding);
+        this.statusPane.getChildren().add(this.status);
     }
 }

@@ -4,6 +4,7 @@ import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.*;
+import javafx.scene.shape.Rectangle;
 
 public class View implements SimonParameters {
 
@@ -52,5 +53,4 @@ public class View implements SimonParameters {
     public Scene getScene() {
         return this.thisScene;
     }
-
 }

@@ -1,5 +1,7 @@
 package simon;
 
+import com.sun.javafx.image.BytePixelSetter;
+
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.Timer;
@@ -10,7 +12,6 @@ public class SecuenciasManager {
     private static SecuenciasManager thisSecuenciasManager;
 
     private LinkedList<String> secuenciaActual;
-    private LinkedList<String> respuestaActual;
 
     /**
      * Patron singleton
@@ -24,25 +25,37 @@ public class SecuenciasManager {
 
     private SecuenciasManager() {
         this.secuenciaActual = new LinkedList<>();
-        this.respuestaActual = new LinkedList<>();
     }
 
     public void showSecuenciaRandom(int size) {
         this.secuenciaActual = getSecuenciaRandom(size);
-        Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
+        Timer timer0;
+
+        timer0 = new Timer();
+        timer0.scheduleAtFixedRate(new TimerTask() {
             int index = 0;
+            int secuenciaIndex = 0;
             @Override
             public void run() {
-                next(secuenciaActual, index);
-                index++;
+                boolean flag = false;
+                if(index % 2 != 0) {
+                    next(secuenciaActual, secuenciaIndex);
+                    flag = true;
+                }
+                else {
+                    GamePane.getInstance().disableButtons(true);
+                }
 
-                if(index == secuenciaActual.size() + 1) {
-                    timer.cancel();
+                if(index == secuenciaActual.size() * 2 + 1) {
+                    timer0.cancel();
                     Controller.getInstance().finShow();
                 }
+
+                if(flag)
+                    secuenciaIndex++;
+                index++;
             }
-        }, 0, 1000);
+        }, 0, 700);
     }
 
     private LinkedList<String> getSecuenciaRandom(int size) {
@@ -63,31 +76,18 @@ public class SecuenciasManager {
     }
 
     private void next(LinkedList<String> secuencia, int index) {
-        if(index > 0)
-            GamePane.getInstance().disableButton(secuencia.get(index - 1), true);
-
-        if(index < secuencia.size())
+        if(index < secuencia.size()) {
             GamePane.getInstance().disableButton(secuencia.get(index), false);
+        }
     }
 
-    public void getRespuesta(String rta) {
-        this.respuestaActual.add(rta);
-
-        if(this.respuestaActual.size() == 3) {
-            boolean bien = true;
-
-            for(int i = 0; i < respuestaActual.size(); i++) {
-                if(!respuestaActual.get(i).equalsIgnoreCase(secuenciaActual.get(i))) {
-                    System.out.println("MAL");
-                    bien = false;
-                    break;
-                }
+    public boolean setRespuesta(LinkedList<String> respuesta) {
+        for(int i = 0; i < respuesta.size(); i++) {
+            if(!respuesta.get(i).equalsIgnoreCase(secuenciaActual.get(i))) {
+                return false;
             }
-            if(bien)
-                System.out.println("BIEN");
-            Controller.getInstance().finRonda();
         }
-
+        return true;
     }
 
 }
