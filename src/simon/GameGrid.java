@@ -3,6 +3,8 @@ package simon;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
@@ -15,6 +17,8 @@ public class GameGrid implements SimonParameters {
     private Pane statusPane;
     private Button jugar;
     private Button verPuntajes;
+    private Slider slider;
+    private ProgressBar progressBar;
     private Label status;
     private Rectangle rectangle;
 
@@ -43,10 +47,17 @@ public class GameGrid implements SimonParameters {
         jugar.setStyle(buttonsStyle);
         jugar.setOnAction(e -> jugarReaccion());
 
+        slider = new Slider(0, 1, 0.5);
+        slider.setPrefSize(buttonsWidth, buttonsHeight);
+
         Button salir = new Button("Salir");
         salir.setPrefSize(buttonsWidth, buttonsHeight);
         salir.setStyle(buttonsStyle);
         salir.setOnAction(e -> Controller.getInstance().exit(0));
+
+        progressBar = new ProgressBar();
+        progressBar.setPrefSize(buttonsWidth, buttonsHeight);
+        progressBar.setProgress(0);
 
         statusPane = new Pane();
         statusPane.setPrefSize(buttonsWidth, buttonsHeight);
@@ -71,7 +82,9 @@ public class GameGrid implements SimonParameters {
         thisGrid.add(jugar, 0, 0);
         thisGrid.add(statusPane, 1, 0);
         thisGrid.add(salir, 2, 0);
+        thisGrid.add(slider, 0, 1);
         thisGrid.add(verPuntajes, 1, 1);
+        thisGrid.add(progressBar, 2, 1);
 
     }
 
@@ -100,6 +113,7 @@ public class GameGrid implements SimonParameters {
     private void jugarReaccion() {
         jugar.setDisable(true);
         verPuntajes.setDisable(true);
+        slider.setDisable(true);
         Controller.getInstance().jugar();
     }
 
@@ -109,6 +123,8 @@ public class GameGrid implements SimonParameters {
     public void finRonda() {
         jugar.setDisable(false);
         verPuntajes.setDisable(false);
+        slider.setDisable(false);
+        progressBar.setProgress(0);
     }
 
     /**
@@ -124,5 +140,21 @@ public class GameGrid implements SimonParameters {
         this.status.setLayoutX(rectangle.getWidth() * 0.33);
         this.status.setLayoutY(vPadding / 2.00);
         this.statusPane.getChildren().add(this.status);
+    }
+
+    /**
+     * Retorna valor del slider
+     * @return double entre 0 y 1
+     */
+    public double getSlideValue() {
+        return this.slider.getValue();
+    }
+
+    /**
+     * Seteo de progreso en barra de progreso
+     * @param progress progreso en double
+     */
+    public void setProgress(double progress) {
+        this.progressBar.setProgress(progress);
     }
 }

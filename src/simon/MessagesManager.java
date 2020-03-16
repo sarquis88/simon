@@ -2,10 +2,9 @@ package simon;
 
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 
-public class MessagesManager {
+public class MessagesManager implements SimonParameters {
 
     /**
      * Constructor vacio de clase

@@ -30,8 +30,12 @@ public class SecuenciasManager {
 
     /**
      * Muestra una secuencia de colores random
+     * @param tiempo tiempo entre colores
+     * @param ronda ronda actual (si es la primer ronda, se limpia la secuencia)
      */
-    public void showSecuenciaRandom() {
+    public void showSecuenciaRandom(int tiempo, int ronda) {
+        if(ronda == 1)
+            this.secuenciaActual.clear();
         this.secuenciaActual.add(getColorRandom());
         Timer timer0;
 
@@ -59,7 +63,7 @@ public class SecuenciasManager {
                     secuenciaIndex++;
                 index++;
             }
-        }, 0, 700);
+        }, 0, tiempo);
     }
 
     /**
@@ -84,18 +88,12 @@ public class SecuenciasManager {
     }
 
     /**
-     * Indica si la respuesta ingresada es correcta o no
-     * @param respuesta lista con la respuesta
-     * @return true para respuesta correcta, de lo contrario false
+     * Se agrega respuesta parcial
+     * @param color respuesta parcial
+     * @param index posicion de respuesta
+     * @return true si la respuesta es parcialmente buena, de lo contrario false
      */
-    public boolean setRespuesta(LinkedList<String> respuesta) {
-        for(int i = 0; i < respuesta.size(); i++) {
-            if(!respuesta.get(i).equalsIgnoreCase(secuenciaActual.get(i))) {
-                this.secuenciaActual.clear();
-                return false;
-            }
-        }
-        return true;
+    public boolean addRespuesta(String color, int index) {
+        return color.equalsIgnoreCase(this.secuenciaActual.get(index));
     }
-
 }

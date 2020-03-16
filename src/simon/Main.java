@@ -1,7 +1,5 @@
 package simon;
 
-// TODO REESTABLECER BASE DE DATOS
-
 import javafx.application.Application;
 import javafx.stage.Stage;
 

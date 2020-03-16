@@ -39,8 +39,9 @@ public class SimonBDD implements SimonParameters {
 
             if(!tableExists("PUNTAJES")) {
                 String sql = 	"CREATE TABLE PUNTAJES " +
-                        " (JUGADOR   	 TEXT	 NOT NULL, " +
-                        " RONDA          INT    NOT NULL) ";
+                        " ( JUGADOR   	 TEXT	 NOT NULL, " +
+                        "   RONDA          INT    NOT NULL," +
+                        "   VELOCIDAD       INT     NOT NULL) ";
                 stmt.executeUpdate(sql);
                 stmt.close();
             }
@@ -76,13 +77,14 @@ public class SimonBDD implements SimonParameters {
      * Insercion de puntaje en base de datos
      * @param jugador jugador dueño del puntaje
      * @param ronda ronda a la cual llego el jugador
+     * @param velocidad velocidad de juego
      */
-    public void insertarPuntaje(String jugador, int ronda) {
+    public void insertarPuntaje(String jugador, int ronda, int velocidad) {
         try {
             c = DriverManager.getConnection("jdbc:sqlite:" + bddPath);
             stmt = c.createStatement();
-            String sql = "INSERT INTO PUNTAJES (JUGADOR, RONDA) " +
-                    "VALUES ('" + jugador + "', " + ronda + ");";
+            String sql = "INSERT INTO PUNTAJES (JUGADOR, RONDA, VELOCIDAD) " +
+                    "VALUES ('" + jugador + "', " + ronda + ", " + velocidad + ");";
             stmt.executeUpdate(sql);
             stmt.close();
             c.close();
@@ -106,8 +108,9 @@ public class SimonBDD implements SimonParameters {
             while (rs.next()) {
                 String nombre = rs.getString("JUGADOR");
                 int ronda = rs.getInt("RONDA");
+                String velocidad = rs.getString("VELOCIDAD");
 
-                Controller.addPuntaje(nombre + "-" + ronda);
+                Controller.addPuntaje(nombre + "-" + ronda + "-" + velocidad);
             }
             c.close();
         }
@@ -134,5 +137,6 @@ public class SimonBDD implements SimonParameters {
         catch (SQLException e) {
             e.printStackTrace();
         }
+        createTables();
     }
 }
