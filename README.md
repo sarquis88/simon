@@ -7,5 +7,5 @@
 * ```git clone https://github.com/sarquis88/simon```
 * ```cd simon```
 * Para habilitar el funcionamiento de la base de datos que contiene los puntajes:
-```chown user simon/src/simon/simon.db```
-* ```java --module-path /path/to/javafx-sdk-VERSION/lib --add-modules=javafx.controls -jar simon/out/artifacts/simon_jar/simon.jar```
+```chown user src/simon/simon.db```
+* ```java --module-path /path/to/javafx-sdk-VERSION/lib --add-modules=javafx.controls -jar out/artifacts/simon_jar/simon.jar```
