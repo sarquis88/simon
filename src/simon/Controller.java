@@ -1,11 +1,12 @@
 package simon;
 
-import java.util.LinkedList;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class Controller implements SimonParameters {
 
     private static Controller thisController;
-    private static LinkedList<String> puntajes = new LinkedList<>();
+    private static ObservableList<Puntaje> puntajes = FXCollections.observableArrayList();
 
     private String status;
 
@@ -127,7 +128,7 @@ public class Controller implements SimonParameters {
      *
      * @param puntaje puntaje a agregar
      */
-    public static void addPuntaje(String puntaje) {
+    public static void addPuntaje(Puntaje puntaje) {
         puntajes.add(puntaje);
     }
 
@@ -138,7 +139,7 @@ public class Controller implements SimonParameters {
         if (puntajes.isEmpty())
             MessagesManager.showInformationAlert("No hay puntajes guardados", false);
         else {
-            ShowPuntajeDialog showPuntajeDialog = new ShowPuntajeDialog(puntajes);
+            ShowPuntajeDialog showPuntajeDialog = new ShowPuntajeDialog();
             showPuntajeDialog.show();
         }
     }
@@ -151,5 +152,13 @@ public class Controller implements SimonParameters {
             SimonBDD.getInstance().restablecerBDD();
             puntajes.clear();
         }
+    }
+
+    /**
+     * Getter de puntajes
+     * @return lista de puntajes
+     */
+    public static ObservableList<Puntaje> getPuntajes() {
+        return puntajes;
     }
 }

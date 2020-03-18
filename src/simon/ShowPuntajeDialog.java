@@ -1,12 +1,7 @@
 package simon;
 
-import javafx.geometry.Insets;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
-
-import java.util.LinkedList;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 public class ShowPuntajeDialog extends SimonDialog implements SimonParameters {
 
@@ -16,47 +11,51 @@ public class ShowPuntajeDialog extends SimonDialog implements SimonParameters {
     /**
      * Constructor de la clase
      */
-    public ShowPuntajeDialog(LinkedList<String> puntajes) {
+    public ShowPuntajeDialog() {
         thisDialog = new Dialog<>();
 
         thisDialog.setTitle("Puntajes");
         thisDialog.setHeaderText("");
-        thisDialog.getDialogPane().setPrefWidth(275);
+        thisDialog.getDialogPane().setPrefWidth(paneWidth);
+        thisDialog.getDialogPane().setPrefHeight(paneHeight);
 
         volver = new ButtonType("Volver");
         reestablecer = new ButtonType("Reestablecer");
 
         thisDialog.getDialogPane().getButtonTypes().addAll(reestablecer, volver);
 
-        GridPane grid = new GridPane();
-        grid.setHgap(hPadding);
-        grid.setVgap(vPadding);
-        grid.setPadding(new Insets(vPadding, hPadding, vPadding, hPadding));
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setLayoutX(0);
+        scrollPane.setLayoutY(0);
+        scrollPane.setPrefWidth(thisDialog.getDialogPane().getPrefWidth());
+        scrollPane.setPrefHeight(thisDialog.getDialogPane().getPrefHeight());
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
-        Label jugadorLabel = new Label("JUGADOR");
-        jugadorLabel.setStyle("-fx-font-weight: bold;");
-        grid.add(jugadorLabel, 0, 0);
+        TableView<Puntaje> tableView = new TableView<>();
+        tableView.setEditable(false);
+        tableView.setPrefWidth(thisDialog.getDialogPane().getPrefWidth() - 5 * hPadding);
+        tableView.setPrefHeight(thisDialog.getDialogPane().getPrefHeight());
 
-        Label rondaLabel = new Label("RONDA");
-        rondaLabel.setStyle("-fx-font-weight: bold;");
-        grid.add(rondaLabel, 1, 0);
+        TableColumn<Puntaje, String> c0 = new TableColumn<>("Jugador");
+        c0.setCellValueFactory(new PropertyValueFactory<>("jugador"));
+        c0.setPrefWidth( tableView.getPrefWidth()  * 0.4);
+        TableColumn<Puntaje, String> c1 = new TableColumn<>("Velocidad");
+        c1.setCellValueFactory(new PropertyValueFactory<>("velocidad"));
+        c1.setPrefWidth( tableView.getPrefWidth() * 0.3);
+        TableColumn<Puntaje, Integer> c2 = new TableColumn<>("Ronda");
+        c2.setCellValueFactory(new PropertyValueFactory<>("ronda"));
+        c2.setPrefWidth( tableView.getPrefWidth() * 0.3);
 
-        Label velocidadLabel = new Label("VELOCIDAD");
-        velocidadLabel.setStyle("-fx-font-weight: bold;");
-        grid.add(velocidadLabel, 2, 0);
+        tableView.setItems(Controller.getPuntajes());
 
-        for(int i = 0; i < puntajes.size(); i++) {
-            Label jugador = new Label(puntajes.get(i).split("-")[0]);
-            grid.add(jugador, 0, i + 1);
+        tableView.getColumns().add(c0);
+        tableView.getColumns().add(c1);
+        tableView.getColumns().add(c2);
 
-            Label ronda = new Label(puntajes.get(i).split("-")[1]);
-            grid.add(ronda, 1, i + 1);
+        scrollPane.setContent(tableView);
 
-            Label velocidad = new Label(puntajes.get(i).split("-")[2] + "%");
-            grid.add(velocidad, 2, i + 1);
-        }
-
-        thisDialog.getDialogPane().setContent(grid);
+        thisDialog.getDialogPane().setContent(scrollPane);
     }
 
     /**

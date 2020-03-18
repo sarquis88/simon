@@ -108,9 +108,9 @@ public class SimonBDD implements SimonParameters {
             while (rs.next()) {
                 String nombre = rs.getString("JUGADOR");
                 int ronda = rs.getInt("RONDA");
-                String velocidad = rs.getString("VELOCIDAD");
+                int velocidad = rs.getInt("VELOCIDAD");
 
-                Controller.addPuntaje(nombre + "-" + ronda + "-" + velocidad);
+                Controller.addPuntaje(new Puntaje(nombre, ronda, velocidad));
             }
             c.close();
         }
