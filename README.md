@@ -3,12 +3,11 @@
 ## Requisitos
 * Java 13 
 * JavaFX SDK 11.0.2 ó 13.0.2
-* SQLite (sin éste requisito, el juego se ejecutaría correctamente pero sin funcionalidad en los puntajes)
 ## Instrucciones 
 ### Linux
 * ```git clone https://github.com/sarquis88/simon```
 * ```cd simon```
-* ```chown -R user src/simon/```
+* ```chown -R user src/```
 * ```java --module-path /path/to/javafx-sdk-VERSION/lib --add-modules=javafx.controls -jar out/artifacts/simon_jar/simon.jar```
 ### Windows
 * ```git clone https://github.com/sarquis88/simon```
