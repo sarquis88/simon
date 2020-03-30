@@ -1,5 +1,5 @@
 # simon
-## Juego "Simon Dice" hecho en javafx
+* Juego "Simon Dice" hecho en javafx
 ## Requisitos
 * Java 13 
 * JavaFX SDK 11.0.2 ó 13.0.2
