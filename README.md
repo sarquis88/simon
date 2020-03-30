@@ -12,3 +12,7 @@
 ### Windows
 * ```git clone https://github.com/sarquis88/simon```
 * ```java --module-path /path/to/javafx-sdk-VERSION/lib --add-modules=javafx.controls -jar out/artifacts/simon_jar/simon.jar```
+## Imágenes 
+![Image description](https://github.com/sarquis88/simon/edit/master/simon0.png)
+![Image description](https://github.com/sarquis88/simon/edit/master/simon1.png)
+![Image description](https://github.com/sarquis88/simon/edit/master/simon2.png)
