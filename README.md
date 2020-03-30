@@ -1,7 +1,7 @@
 # simon
 ## Juego "Simon Dice" hecho en javafx
 ## Requisitos
-* Java 11 ó 13 
+* Java 13 
 * JavaFX SDK 11.0.2 ó 13.0.2
 ## Instrucciones 
 ### Linux
